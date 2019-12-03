@@ -1,39 +1,41 @@
-import React from 'react'
-import Link from 'next/link'
-import Layout from "../components/layouts/Layout"
-import Header from '../components/Header.js'
-import { authenticate, logout, logoutEvent } from '../utils'
-const config = require('../config.json')
+import React from 'react';
+import Link from 'next/link';
+import Layout from '../components/layouts/Layout';
+import Header from '../components/Header.js';
+import { authenticate } from '../utils';
+
 var createReactClass = require('create-react-class');
 
+// TODO decide: is Iframe component useful
+// eslint-disable-next-line no-unused-vars
 var Iframe = createReactClass({
   render: function() {
-    return(
-      <div>
-      </div>
-    )
-  }
+    return <div></div>;
+  },
 });
 
 export default class Home extends React.Component {
-  static async getInitialProps ({ req, res }) {
-    const user = await authenticate(req, res)
-    return { user }
+  static async getInitialProps({ req, res }) {
+    const user = await authenticate(req, res);
+    return { user };
   }
 
-  componentDidMount () {
+  componentDidMount() {
     if (this.props.user) {
       try {
-        window.localStorage.setItem('email', this.props.user.email)
-        window.localStorage.setItem('oneup_access_token', this.props.user.oneup_access_token)
+        window.localStorage.setItem('email', this.props.user.email);
+        window.localStorage.setItem(
+          'oneup_access_token',
+          this.props.user.oneup_access_token,
+        );
       } catch (err) {}
     } else {
-      window.localStorage.remove('email')
-      window.localStorage.remove('oneup_access_token')
+      window.localStorage.remove('email');
+      window.localStorage.remove('oneup_access_token');
     }
   }
 
-  render () {
+  render() {
     return (
       <Layout>
         <Header user={this.props.user} />
@@ -42,13 +44,17 @@ export default class Home extends React.Component {
           <h2 className="text-center">Link your providers</h2>
         </div>
         <iframe
-          style={{border:'0px solid #fff'}}
+          title="Search"
+          style={{ border: '0px solid #fff' }}
           src={`https://system-search.1up.health/search/?access_token=${this.props.user.oneup_access_token}`}
           height={500}
-          width='100%'/>
-          <br/>
+          width="100%"
+        />
+        <br />
         <div className="text-center">
-          <Link href='/dashboard'><h3>Go to your medical dashboard</h3></Link>
+          <Link href="/dashboard">
+            <h3>Go to your medical dashboard</h3>
+          </Link>
         </div>
         <style jsx>{`
           div {
@@ -59,6 +65,6 @@ export default class Home extends React.Component {
           }
         `}</style>
       </Layout>
-    )
+    );
   }
 }

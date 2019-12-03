@@ -7,7 +7,13 @@
     "dev": "nodemon server.js",
     "build": "next build",
     "start": "cross-env NODE_ENV=production node server.js",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix ."
+  },
+  "engines": {
+    "node": "~12.13.1",
+    "npm": "~6.12.1"
   },
   "nodemonConfig": {
     "ignore": [
@@ -61,5 +67,20 @@
     "serverless-domain-manager": "^3.2.2",
     "serverless-http": "^2.0.2",
     "serverless-vpc-discovery": "^1.0.13"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.10.0",
+    "@typescript-eslint/parser": "^2.10.0",
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.7.2",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-config-react-app": "^5.0.2",
+    "eslint-plugin-flowtype": "^3.13.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-react": "^7.17.0",
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "prettier": "1.19.1"
   }
 }

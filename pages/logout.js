@@ -1,29 +1,28 @@
-import React from 'react'
-import Link from 'next/link'
-import Header from '../components/Header.js'
+import React from 'react';
+import Header from '../components/Header.js';
 
 export default class Logout extends React.Component {
-  static async getInitialProps ({ req }) {
-    const user = req ? req.user : null
-    return { user }
+  static async getInitialProps({ req }) {
+    const user = req ? req.user : null;
+    return { user };
   }
 
-  componentDidMount () {
+  componentDidMount() {
     if (this.props.user) {
       try {
-        window.localStorage.setItem('user', this.props.user)
+        window.localStorage.setItem('user', this.props.user);
       } catch (err) {}
     } else if (typeof this.props.user !== 'undefined') {
-      window.localStorage.removeItem('user')
+      window.localStorage.removeItem('user');
     }
   }
 
-  render () {
+  render() {
     return (
       <div>
         <Header />
         <h1>Logged out!</h1>
       </div>
-    )
+    );
   }
 }
