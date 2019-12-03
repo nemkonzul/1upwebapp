@@ -9,6 +9,10 @@
     "start": "cross-env NODE_ENV=production node server.js",
     "test": "jest"
   },
+  "engines": {
+    "node": "~12.13.1",
+    "npm": "~6.12.1"
+  },
   "nodemonConfig": {
     "ignore": [
       "pages/*",
