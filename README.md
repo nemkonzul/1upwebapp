@@ -1,6 +1,8 @@
 # 1up Health Demo Web Application
 Example web application built using 1upHealth FHIR, User &amp; Connect APIs  
 
+[![CircleCI](https://circleci.com/gh/1uphealth/1upwebapp.svg?style=svg)](https://circleci.com/gh/1uphealth/1upwebapp)
+
 ## Before you start
 Create an application via the 1uphealth devconsole [https://1up.health/devconsole](https://1up.health/devconsole) for testing purposes.  Use `http://localhost:3000/callback` for your app's callback url. Make sure you save your client secret as it'll only be shown once.
 
