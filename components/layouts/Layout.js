@@ -1,19 +1,18 @@
-import React from "react"
-import Head from "next/head"
-import Header from "../Header"
-import NProgress from 'nprogress'
-import Router from 'next/router'
+import React from 'react';
+import Head from 'next/head';
+import NProgress from 'nprogress';
+import Router from 'next/router';
 
 // import fontawesomeStyle from 'font-awesome/css/font-awesome.css'
-import "../../styles/index.scss"
+import '../../styles/index.scss';
 
-Router.onRouteChangeStart = (url) => {
-  console.log(`Loading: ${url}`)
-  NProgress.start()
-  console.log(`started: ${url}`)
-}
-Router.onRouteChangeComplete = () => NProgress.done()
-Router.onRouteChangeError = () => NProgress.done()
+Router.onRouteChangeStart = url => {
+  console.log(`Loading: ${url}`);
+  NProgress.start();
+  console.log(`started: ${url}`);
+};
+Router.onRouteChangeComplete = () => NProgress.done();
+Router.onRouteChangeError = () => NProgress.done();
 
 const Layout = props => (
   <div>
@@ -23,6 +22,6 @@ const Layout = props => (
     </Head>
     {props.children}
   </div>
-)
+);
 
-export default Layout
+export default Layout;
