@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "cross-env NODE_ENV=production node server.js",
     "test": "jest",
-    "deploy:staging": "echo 'TODO: deploy staing'; exit 1"
+    "deploy:dev": "serverless deploy --stage dev"
   },
   "nodemonConfig": {
     "ignore": [
@@ -62,5 +62,8 @@
     "serverless-domain-manager": "^3.2.2",
     "serverless-http": "^2.0.2",
     "serverless-vpc-discovery": "^1.0.13"
+  },
+  "devDependencies": {
+    "serverless": "^1.58.0"
   }
 }
