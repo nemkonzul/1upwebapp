@@ -40,10 +40,44 @@ export default class Dashboard extends React.Component {
     }
   }
 
+  components = [
+    'Condition',
+    'Coverage',
+    'Encounter',
+    'ExplanationOfBenefit',
+    'MedicationDispense',
+    'MedicationRequest',
+    'Organization',
+    'Patient',
+    'Practitioner',
+    'Procedure',
+    'ReferralRequest',
+    'AllergyIntolerance',
+    'CarePlan',
+    'CareTeam',
+    'Device',
+    'DiagnosticReport',
+    'DocumentReference',
+    'Goal',
+    'Immunization',
+    'MedicationAdministration',
+    'MedicationStatement',
+    'Observation',
+  ];
+
+  renderSummary = data => {
+    return this.components.map(item => {
+      const item2 = data[item] || { total: 0 };
+      return `${item}: ${item2.total}` + '\n';
+    });
+  };
+
   render() {
+    console.log(JSON.stringify(this.props.dashboard.resources, null, 2));
     return (
       <Layout>
         <Header user={this.props.user} />
+        <pre>{this.renderSummary(this.props.dashboard.resources)}</pre>
         <div className="container">
           <br />
           <h1>Your medical dashboard </h1>
@@ -66,25 +100,28 @@ export default class Dashboard extends React.Component {
             )}
           </div>
           <div style={{ textAlign: 'left' }}>
-            {[
-              'Patient',
-              'Practitioner',
-              'AllergyIntolerance',
-              'MedicationOrder',
-              'MedicationStatement',
-              'Condition',
-              'Observation',
-              'FamilyMemberHistory',
-              'DiagnosticReport',
-              'Immunization',
-              'Encounter',
-              'CarePlan',
-              'Goal',
-              'Procedure',
-              'Device',
-              'DocumentReference',
-              'Binary',
-            ].map(
+            {// [
+            //   'Patient',
+            //   'Practitioner',
+            //   'AllergyIntolerance',
+            //   'MedicationOrder',
+            //   'MedicationStatement',
+            //   'Condition',
+            //   'Observation',
+            //   'FamilyMemberHistory',
+            //   'DiagnosticReport',
+            //   'Immunization',
+            //   'Encounter',
+            //   'CarePlan',
+            //   'Goal',
+            //   'Procedure',
+            //   'Device',
+            //   'DocumentReference',
+            //   'Binary',
+            //   'Explanationofbenefit',
+            //   'MedicationDispense',
+            // ]
+            this.components.map(
               function(resourceType) {
                 return (
                   <div>
@@ -102,6 +139,7 @@ export default class Dashboard extends React.Component {
                           function(resourceContainer) {
                             return (
                               <FhirResource
+                                fhirVersion="stu3"
                                 fhirResource={resourceContainer.resource}
                               />
                             );

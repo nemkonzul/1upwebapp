@@ -5,6 +5,7 @@ const ONEUP_DEMOWEBAPPLOCAL_CLIENTID =
   process.env.ONEUP_DEMOWEBAPPLOCAL_CLIENTID;
 const ONEUP_DEMOWEBAPPLOCAL_CLIENTSECRET =
   process.env.ONEUP_DEMOWEBAPPLOCAL_CLIENTSECRET;
+
 let accessTokenCache = {};
 const ROOT_API_URL = `https://api.1up.health`;
 const USER_API_URL = `https://api.1up.health`;
@@ -133,22 +134,61 @@ function getFhirResourceBundle(
     callback(error, body);
   });
 }
-
-let endpointsToQuery = [
-  { apiVersion: 'stu3', resourceType: 'Patient' },
-  { apiVersion: 'stu3', resourceType: 'Coverage' },
-  { apiVersion: 'stu3', resourceType: 'ExplanationOfBenefit' },
-  { apiVersion: 'stu3', resourceType: 'ReferralRequest' },
-  { apiVersion: 'dstu2', resourceType: 'Patient' },
-  { apiVersion: 'dstu2', resourceType: 'Encounter' },
-  { apiVersion: 'dstu2', resourceType: 'Observation' },
-  { apiVersion: 'dstu2', resourceType: 'MedicationOrder' },
-  { apiVersion: 'stu3', resourceType: 'MedicationDispense' },
-  { apiVersion: 'stu3', resourceType: 'MedicationStatement' },
-  { apiVersion: 'stu3', resourceType: 'MedicationOrder' },
-  { apiVersion: 'dstu2', resourceType: 'Condition' },
-  { apiVersion: 'dstu2', resourceType: 'AllergyIntolerance' },
+const components = [
+  'Condition',
+  'Coverage',
+  'Encounter',
+  'ExplanationOfBenefit',
+  'MedicationDispense',
+  'MedicationRequest',
+  'Organization',
+  'Patient',
+  'Practitioner',
+  'Procedure',
+  'ReferralRequest',
+  'AllergyIntolerance',
+  'CarePlan',
+  'CareTeam',
+  'Device',
+  'DiagnosticReport',
+  'DocumentReference',
+  'Goal',
+  'Immunization',
+  'MedicationAdministration',
+  'MedicationStatement',
+  'Observation',
 ];
+let endpointsToQuery = components.map(item => ({
+  apiVersion: 'stu3',
+  resourceType: item,
+}));
+// let endpointsToQuery = [
+//   { apiVersion: 'stu3', resourceType: 'Patient' },
+//   { apiVersion: 'stu3', resourceType: 'Coverage' },
+//   { apiVersion: 'stu3', resourceType: 'ExplanationOfBenefit' },
+//   { apiVersion: 'stu3', resourceType: 'ReferralRequest' },
+//   { apiVersion: 'stu3', resourceType: 'MedicationDispense' },
+//   { apiVersion: 'stu3', resourceType: 'MedicationStatement' },
+//   { apiVersion: 'stu3', resourceType: 'MedicationOrder' },
+//   { apiVersion: 'stu3', resourceType: 'Encounter' },
+//   { apiVersion: 'stu3', resourceType: 'Observation' },
+//   { apiVersion: 'stu3', resourceType: 'Condition' },
+//   { apiVersion: 'stu3', resourceType: 'Coverage' },
+//   { apiVersion: 'stu3', resourceType: 'CarePlan' },
+//   { apiVersion: 'stu3', resourceType: 'Device' },
+//   { apiVersion: 'stu3', resourceType: 'DiagnosticReport' },
+//   { apiVersion: 'stu3', resourceType: 'Goal' },
+//   { apiVersion: 'stu3', resourceType: 'Immunization' },
+//   { apiVersion: 'stu3', resourceType: 'Procedure' },
+//   { apiVersion: 'stu3', resourceType: 'Practitioner' },
+
+//   // { apiVersion: 'dstu2', resourceType: 'Patient' },
+//   // { apiVersion: 'dstu2', resourceType: 'Encounter' },
+//   // { apiVersion: 'dstu2', resourceType: 'Observation' },
+//   // { apiVersion: 'dstu2', resourceType: 'MedicationOrder' },
+//   // { apiVersion: 'dstu2', resourceType: 'Condition' },
+//   // { apiVersion: 'dstu2', resourceType: 'AllergyIntolerance' },
+// ];
 
 function getAllFhirResourceBundles(oneupAccessToken, callback) {
   let responseData = {};
