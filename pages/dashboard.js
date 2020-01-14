@@ -121,36 +121,36 @@ export default class Dashboard extends React.Component {
             //   'Explanationofbenefit',
             //   'MedicationDispense',
             // ]
-            this.components.map(
-              function(resourceType) {
-                return (
-                  <div>
-                    {typeof this.props.dashboard.resources[resourceType] !=
-                      'undefined' &&
-                    this.props.dashboard.resources[resourceType].entry.length >
-                      0 ? (
-                      <h1>{resourceType}</h1>
-                    ) : (
-                      ''
-                    )}
-                    {typeof this.props.dashboard.resources[resourceType] !=
-                    'undefined'
-                      ? this.props.dashboard.resources[resourceType].entry.map(
-                          function(resourceContainer) {
-                            return (
+            this.components.map(resourceType => {
+              return (
+                <div>
+                  {typeof this.props.dashboard.resources[resourceType] !=
+                    'undefined' &&
+                  this.props.dashboard.resources[resourceType].entry.length >
+                    0 ? (
+                    <h1>{resourceType}</h1>
+                  ) : (
+                    ''
+                  )}
+                  {typeof this.props.dashboard.resources[resourceType] !=
+                  'undefined'
+                    ? this.props.dashboard.resources[resourceType].entry.map(
+                        (resourceContainer, idx) => {
+                          return (
+                            <div style={{ marginBottom: '1rem' }} key={idx}>
                               <FhirResource
                                 fhirVersion="stu3"
                                 fhirResource={resourceContainer.resource}
                               />
-                            );
-                          },
-                        )
-                      : ''}
-                    <br />
-                  </div>
-                );
-              }.bind(this),
-            )}
+                            </div>
+                          );
+                        },
+                      )
+                    : ''}
+                  <br />
+                </div>
+              );
+            })}
           </div>
         </div>
       </Layout>
