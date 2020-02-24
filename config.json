@@ -4,5 +4,38 @@
   "__clientId": "the client id must be hardcoded in the clientId field above because the value will also be used on client app where environmental variables will not be accessible",
   "email": {
     "sender": "address@demo.com"
-  }
+  },
+  "resourceComponents": [
+    "Condition",
+    "Coverage",
+    "Encounter",
+    "ExplanationOfBenefit",
+    "MedicationDispense",
+    "MedicationRequest",
+    "Organization",
+    "Patient",
+    "Practitioner",
+    "Procedure",
+    "ReferralRequest",
+    "AllergyIntolerance",
+    "CarePlan",
+    "CareTeam",
+    "Device",
+    "DiagnosticReport",
+    "DocumentReference",
+    "Goal",
+    "Immunization",
+    "MedicationAdministration",
+    "MedicationStatement",
+    "Observation",
+    "AdverseEvent",
+    "Appointment",
+    "Claim",
+    "ClaimResponse",
+    "Location",
+    "Medication",
+    "Questionnaire",
+    "QuestionnaireResponse",
+    "ResearchStudy"
+  ]
 }

@@ -1,10 +1,12 @@
 // utilities to interface with the 1uphealth api servers side
 const request = require('request');
 const async = require('async');
+const appConfig = require('./config.json');
 const ONEUP_DEMOWEBAPPLOCAL_CLIENTID =
   process.env.ONEUP_DEMOWEBAPPLOCAL_CLIENTID;
 const ONEUP_DEMOWEBAPPLOCAL_CLIENTSECRET =
   process.env.ONEUP_DEMOWEBAPPLOCAL_CLIENTSECRET;
+
 let accessTokenCache = {};
 const ROOT_API_URL = `https://api.1up.health`;
 const USER_API_URL = `https://api.1up.health`;
@@ -130,47 +132,51 @@ function getFhirResourceBundle(
         console.log('error***********', new Date(), url, options);
       }
     }
-    callback(error, body);
+    callback(error, apiVersion, body);
   });
 }
 
-let endpointsToQuery = [
-  { apiVersion: 'stu3', resourceType: 'Patient' },
-  { apiVersion: 'stu3', resourceType: 'Coverage' },
-  { apiVersion: 'stu3', resourceType: 'ExplanationOfBenefit' },
-  { apiVersion: 'stu3', resourceType: 'ReferralRequest' },
-  { apiVersion: 'dstu2', resourceType: 'Patient' },
-  { apiVersion: 'dstu2', resourceType: 'Encounter' },
-  { apiVersion: 'dstu2', resourceType: 'Observation' },
-  { apiVersion: 'dstu2', resourceType: 'MedicationOrder' },
-  { apiVersion: 'stu3', resourceType: 'MedicationDispense' },
-  { apiVersion: 'stu3', resourceType: 'MedicationStatement' },
-  { apiVersion: 'stu3', resourceType: 'MedicationOrder' },
-  { apiVersion: 'dstu2', resourceType: 'Condition' },
-  { apiVersion: 'dstu2', resourceType: 'AllergyIntolerance' },
-];
+const DSTU2EndpointsToQuery = appConfig.resourceComponents.map(item => ({
+  apiVersion: 'dstu2',
+  resourceType: item,
+}));
+const STU3EndpointsToQuery = appConfig.resourceComponents.map(item => ({
+  apiVersion: 'stu3',
+  resourceType: item,
+}));
 
 function getAllFhirResourceBundles(oneupAccessToken, callback) {
   let responseData = {};
   async.map(
-    endpointsToQuery,
+    [...DSTU2EndpointsToQuery, ...STU3EndpointsToQuery],
     function(params, callback) {
       getFhirResourceBundle(
         params.apiVersion,
         params.resourceType,
         oneupAccessToken,
-        function(error, body) {
+        function(error, apiVersion, body) {
           if (error) {
             callback(error);
           } else {
             try {
               let jsbody = JSON.parse(body);
               if (typeof responseData[params.resourceType] === 'undefined') {
-                responseData[params.resourceType] = jsbody;
+                responseData[params.resourceType] = {
+                  ...jsbody,
+                  entry: jsbody.entry.map(item => ({
+                    ...item,
+                    fhirVersion: apiVersion,
+                  })),
+                };
               } else {
                 responseData[params.resourceType].entry = responseData[
                   params.resourceType
-                ].entry.concat(jsbody.entry);
+                ].entry.concat(
+                  jsbody.entry.map(item => ({
+                    ...item,
+                    fhirVersion: apiVersion,
+                  })),
+                );
               }
               callback(null, jsbody);
             } catch (e) {

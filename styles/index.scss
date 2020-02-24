@@ -1,5 +1,9 @@
-@import "./node_modules/bootstrap/scss/bootstrap.scss";
-@import "./node_modules/nprogress/nprogress";
+@import './node_modules/bootstrap/scss/bootstrap.scss';
+@import './node_modules/nprogress/nprogress';
+
+@import '~fhir-react/build/bootstrap-reboot.min.css';
+@import '~fhir-react/build/style.css';
+
 body {
   margin: 0px;
 }

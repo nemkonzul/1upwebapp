@@ -67,23 +67,37 @@ export default class Dashboard extends React.Component {
           </div>
           <div style={{ textAlign: 'left' }}>
             {[
+              'Condition',
+              'Coverage',
+              'Encounter',
+              'ExplanationOfBenefit',
+              'MedicationDispense',
+              'MedicationRequest',
+              'Organization',
               'Patient',
               'Practitioner',
-              'AllergyIntolerance',
-              'MedicationOrder',
-              'MedicationStatement',
-              'Condition',
-              'Observation',
-              'FamilyMemberHistory',
-              'DiagnosticReport',
-              'Immunization',
-              'Encounter',
-              'CarePlan',
-              'Goal',
               'Procedure',
+              'ReferralRequest',
+              'AllergyIntolerance',
+              'CarePlan',
+              'CareTeam',
               'Device',
+              'DiagnosticReport',
               'DocumentReference',
-              'Binary',
+              'Goal',
+              'Immunization',
+              'MedicationAdministration',
+              'MedicationStatement',
+              'Observation',
+              'AdverseEvent',
+              'Appointment',
+              'Claim',
+              'ClaimResponse',
+              'Location',
+              'Medication',
+              'Questionnaire',
+              'QuestionnaireResponse',
+              'ResearchStudy',
             ].map(
               function(resourceType) {
                 return (
@@ -102,6 +116,7 @@ export default class Dashboard extends React.Component {
                           function(resourceContainer) {
                             return (
                               <FhirResource
+                                fhirVersion={resourceContainer.fhirVersion}
                                 fhirResource={resourceContainer.resource}
                               />
                             );
