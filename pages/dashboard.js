@@ -5,6 +5,9 @@ import { authenticate } from '../utils';
 import Header from '../components/Header.js';
 import Layout from '../components/layouts/Layout';
 import { FhirResource } from 'fhir-react';
+const {
+  displayInOrder: resourcesListToDisplayInOrder,
+} = require('../resourcesConfig');
 
 export default class Dashboard extends React.Component {
   static async getInitialProps({ req, res }) {
@@ -66,25 +69,7 @@ export default class Dashboard extends React.Component {
             )}
           </div>
           <div style={{ textAlign: 'left' }}>
-            {[
-              'Patient',
-              'Practitioner',
-              'AllergyIntolerance',
-              'MedicationOrder',
-              'MedicationStatement',
-              'Condition',
-              'Observation',
-              'FamilyMemberHistory',
-              'DiagnosticReport',
-              'Immunization',
-              'Encounter',
-              'CarePlan',
-              'Goal',
-              'Procedure',
-              'Device',
-              'DocumentReference',
-              'Binary',
-            ].map(
+            {resourcesListToDisplayInOrder.map(
               function(resourceType) {
                 return (
                   <div>
@@ -103,6 +88,7 @@ export default class Dashboard extends React.Component {
                             return (
                               <FhirResource
                                 fhirResource={resourceContainer.resource}
+                                fhirVersion={resourceContainer.fhirVersion}
                               />
                             );
                           },

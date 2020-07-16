@@ -1,6 +1,8 @@
 // utilities to interface with the 1uphealth api servers side
 const request = require('request');
 const async = require('async');
+const { availableResources } = require('./resourcesConfig');
+
 const ONEUP_DEMOWEBAPPLOCAL_CLIENTID =
   process.env.ONEUP_DEMOWEBAPPLOCAL_CLIENTID;
 const ONEUP_DEMOWEBAPPLOCAL_CLIENTSECRET =
@@ -134,21 +136,17 @@ function getFhirResourceBundle(
   });
 }
 
-let endpointsToQuery = [
-  { apiVersion: 'stu3', resourceType: 'Patient' },
-  { apiVersion: 'stu3', resourceType: 'Coverage' },
-  { apiVersion: 'stu3', resourceType: 'ExplanationOfBenefit' },
-  { apiVersion: 'stu3', resourceType: 'ReferralRequest' },
-  { apiVersion: 'dstu2', resourceType: 'Patient' },
-  { apiVersion: 'dstu2', resourceType: 'Encounter' },
-  { apiVersion: 'dstu2', resourceType: 'Observation' },
-  { apiVersion: 'dstu2', resourceType: 'MedicationOrder' },
-  { apiVersion: 'stu3', resourceType: 'MedicationDispense' },
-  { apiVersion: 'stu3', resourceType: 'MedicationStatement' },
-  { apiVersion: 'stu3', resourceType: 'MedicationOrder' },
-  { apiVersion: 'dstu2', resourceType: 'Condition' },
-  { apiVersion: 'dstu2', resourceType: 'AllergyIntolerance' },
-];
+const endpointsToQuery = availableResources.reduce((data, item) => {
+  item.resourceVersions.forEach(el => {
+    data.push({ apiVersion: el, resourceType: item.resourceType });
+  });
+  return data;
+}, []);
+
+const resourceDTO = fhirVersion => data => ({
+  ...data,
+  fhirVersion: fhirVersion,
+});
 
 function getAllFhirResourceBundles(oneupAccessToken, callback) {
   let responseData = {};
@@ -167,10 +165,15 @@ function getAllFhirResourceBundles(oneupAccessToken, callback) {
               let jsbody = JSON.parse(body);
               if (typeof responseData[params.resourceType] === 'undefined') {
                 responseData[params.resourceType] = jsbody;
+                responseData[params.resourceType].entry = responseData[
+                  params.resourceType
+                ].entry.map(resourceDTO(params.apiVersion));
               } else {
                 responseData[params.resourceType].entry = responseData[
                   params.resourceType
-                ].entry.concat(jsbody.entry);
+                ].entry.concat(
+                  jsbody.entry.map(resourceDTO(params.apiVersion)),
+                );
               }
               callback(null, jsbody);
             } catch (e) {
