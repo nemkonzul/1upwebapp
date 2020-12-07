@@ -9,7 +9,7 @@ provider:
 
 functions:
   server:
-    handler: index.server
+    handler: index.server # the exported server method located in index.js
     events:
       - http: # this is an API Gateway HTTP event trigger 
           path: /
@@ -23,7 +23,7 @@ package:
     - .eslintignore
     - .eslintrc
     - .prettierrc
-    - .next
+    - sls-package/**
 
 plugins:
-  - serverless-offline
+  - serverless-offline # for local debugging
