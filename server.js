@@ -72,7 +72,8 @@ app
     server.get('*', (req, res) => {
       return handle(req, res);
     });
-
+    
+    // this is not needed on lambda
     server.listen(3000, err => {
       if (err) throw err;
       console.log('> Ready on http://localhost:3000');
