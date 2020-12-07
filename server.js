@@ -11,6 +11,7 @@ const app = next({ dev });
 const handle = app.getRequestHandler();
 const server = express();
 
+// the app bundle screws up the lambda mode of funcitoning
 app
   .prepare()
   .then(() => {
@@ -70,10 +71,11 @@ app
     });
 
     server.get('*', (req, res) => {
+      console.log(req.url);
       return handle(req, res);
     });
     
-    // this is not needed on lambda
+    // this is not needed on lambda though
     server.listen(3000, err => {
       if (err) throw err;
       console.log('> Ready on http://localhost:3000');
