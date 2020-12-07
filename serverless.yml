@@ -24,6 +24,7 @@ package:
     - .eslintrc
     - .prettierrc
     - sls-package/**
+    - scripts/**
 
 plugins:
   - serverless-offline # for local debugging
