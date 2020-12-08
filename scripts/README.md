@@ -4,7 +4,7 @@ It executes git, npm, and serverless commands.
 
 ## Prerequisits
 Python 3.5+ is installed.  
-You have gone through the setup described in the root.
+You have gone through the setups described in the root.
 
 ## Guideline
 1. Run the script
