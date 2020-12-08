@@ -30,7 +30,6 @@ def build():
 
 
 def deploy(env):
-    pass
     # Once the build process is successful, and the tests are passing too
     # serverless deploy command is invoked for the select environment
     if build() == 0 and run_unit_tests() == 0:
