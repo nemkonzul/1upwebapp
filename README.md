@@ -82,7 +82,7 @@ This project is a fork of the original solution: https://github.com/1uphealth/1u
 *	Removed the broken [pages/test.js](https://www.dropbox.com/s/twk54g426zaozv2/test%20page.png "test page") file
 *	Added a dummy test to a newly created tests/tests.js file so that we can have a valid jest test result.
 * Added some changes to .gitignore
-* Added serverless.yml
+* Added the serverless.yml configuration
 * Added sls-package folder for storing a demo package
 * Added the scripts folder for a simple python script that deploys the serverless package
 
@@ -101,9 +101,9 @@ sls offline start
 The application cannot resolve the api requests on lambda, meaning invoking the lambda function's URL *xyz/dev* returns a [404](https://www.dropbox.com/s/06rdz0eiqkfob89/404.png "ping response"). 
 I've learnt that the index.js bundles the Express server app into a single lambda function and ties it to an API Gateway endpoint, and the [serverless.yml](https://github.com/nemkonzul/1upwebapp/blob/master/serverless.yml "serverless settings") settings allow the API Gateway to proxy every request to the internal Express router which will then tell Next to render the React.js pages. *However* the Next app is wrapping the express server in [server.js](https://github.com/nemkonzul/1upwebapp/blob/master/server.js "React + Express"), and it makes the routing inaccessible. The only way I was able to hit the function's API endpoint successfully, was by commenting out the App bundling in server.js (line #5-7 & #84-87), it consequently detached the react rendering, but at least after countless frustrating hours I was able to get a 302 API response. Note: Those comments were removed. TBD to resolve the issue.
 
-# Using the current configs and app implementation
+## Using the current configs and app implementation
 The app as a function can be deployed to lambda. All the heavy lifting on AWS is done by serverless which is great: package is available on S3, necessary roles are created and attached to the services across the platform, logs are accessible on CloudWatch, the API Gateway is put in front of the function.  
-One package example deployed to the *dev* environment can be found under the [sls-package](https://github.com/nemkonzul/1upwebapp/tree/master/sls-package' "dev package") folder.
+One package example deployed to the *dev* environment can be found under the [sls-package](https://github.com/nemkonzul/1upwebapp/tree/master/sls-package "dev package") folder.
 
-# Deploy script 
-The python script for automatic deployment can be found in the [scripts](https://github.com/nemkonzul/1upwebapp/tree/master/scripts, "auto deployment") folder.
+## Deploy script 
+The python script for automatic deployment can be found in the [scripts](https://github.com/nemkonzul/1upwebapp/tree/master/scripts "auto deployment") folder.
