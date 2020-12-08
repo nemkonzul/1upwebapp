@@ -12,7 +12,7 @@ You have gone through the setups described in the root.
 $ python3 ./webapp_releaser.py
 ```
 
-2. You will be promted to use one of the numbers tied to the below commands.
+2. You will be promted to use one of the numbers tied to the commands below.
 ```
 - 1) Basic flow: Check master for changes, build, test, and deploy to dev
 - 2) Build, test, deploy to dev
