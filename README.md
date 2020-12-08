@@ -91,6 +91,7 @@ Install and configure the Serverless Framework, and the serverless-offline plugi
 Add your AWS IAM User's public and secret keys instead of the placeholders.  
 ```
 npm install -g serverless serverless-offline
+
 sls config credentials --provider aws --key PUBLIC_KEY --secret SECRET_KEY
 ```
 The offline plugin emulates AWS λ and API Gateway on your local machine, it's not necessary.
