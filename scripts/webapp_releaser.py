@@ -6,7 +6,7 @@ def master_changed():
                                     cwd='../.',
                                     shell=True,
                                     universal_newlines=True)
-    # checking the upstream's HEAD
+    # checking the master's HEAD
     UPSTREAMHASH = subprocess.check_output('git ls-remote | grep HEAD | cut -f 1',
                                            cwd='../.',
                                            shell=True,
